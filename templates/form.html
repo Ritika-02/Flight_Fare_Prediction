@@ -1,0 +1,102 @@
+<html>
+<body>
+<form action="{{url_for('predict_datapoint')}}" method="POST">
+
+    <div class="form-group">
+        <label for="Airline">Airline:</label>
+        <select id="Airline" name="Airline">
+            <option value="IndiGo">IndiGo</option>
+            <option value="Air India">Air India</option>
+            <option value="Jet Airways">Jet Airways</option>
+            <option value="SpiceJet">SpiceJet</option>
+            <option value="Multiple carriers">Multiple carriers</option>
+            <option value="GoAir">GoAir</option>
+            <option value="Vistara">Vistara</option>
+            <option value="Air Asia">Air Asia</option>
+            <option value="Vistara Premium economy">Vistara Premium economy</option>
+            <option value="Jet Airways Business">Jet Airways Business</option>
+            <option value="Multiple carriers Premium economy">Multiple carriers Premium economy</option>
+            <option value="Trujet">Trujet</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Source">Source:</label>
+        <select id="Source" name="Source">
+            <option value="Banglore">Banglore</option>
+            <option value="Kolkata">Kolkata</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Mumbai">Mumbai</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Destination">Destination:</label>
+        <select id="Destination" name="Destination">
+            <option value="New Delhi">New Delhi</option>
+            <option value="Banglore">Banglore</option>
+            <option value="Cochin">Cochin</option>
+            <option value="Kolkata">Kolkata</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Hyderabad">Hyderabad</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="Total_Stops">Total Stops:</label>
+        <select id="Total_Stops" name="Total_Stops">
+            <option value="non-stop">non-stop</option>
+            <option value="1 stop">1 stop</option>
+            <option value="2 stops">2 stops</option>
+            <option value="3 stops">3 stops</option>
+            <option value="4 stops">4 stops</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Departure_Hour">Departure Hour:</label>
+        <input type="text" id="Departure_Hour" name="Departure_Hour" placeholder="Enter Departure Hour (integer)">
+    </div>
+
+    <div class="form-group">
+        <label for="Departure_Min">Departure Min:</label>
+        <input type="text" id="Departure_Min" name="Departure_Min" placeholder="Enter Departure Min (integer)">
+    </div>
+
+    <div class="form-group">
+        <label for="Arrival_Hour">Arrival Hour Hour:</label>
+        <input type="text" id="Arrival_Hour" name="Arrival_Hour" placeholder="Enter Arrival Hour (integer)">
+    </div>
+
+    <div class="form-group">
+        <label for="Arrival_Min">Arrival Min:</label>
+        <input type="text" id="Arrival_Min" name="Arrival_Min" placeholder="Enter Arrival_Min (integer)">
+    </div>
+
+    <div class="form-group">
+        <label for="Journey_Day">Journey Day:</label>
+        <input type="text" id="Journey_Day" name="Journey_Day" placeholder="Journey Day (integer)">
+    </div>
+
+    <div class="form-group">
+        <label for="Journey_Month">Journey Month:</label>
+        <input type="text" id="Journey_Month" name="Journey_Month" placeholder="Journey Month (integer)">
+    </div>
+
+    <div class="form-group">
+        <label for="Duration_Hour">Duration Hour:</label>
+        <input type="text" id="Duration_Hour" name="Duration_Hour" placeholder="Duration Hour (integer)">
+    </div>
+
+    <div class="form-group">
+        <label for="Duration_Min">Duration Min:</label>
+        <input type="text" id="Duration_Min" name="Duration_Min" placeholder="Duration Min (integer)">
+    </div>
+
+
+    <div style="clear:both;"></div>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
