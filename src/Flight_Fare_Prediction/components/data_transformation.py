@@ -39,8 +39,8 @@ class DataTransformation:
             # Numerical Pipeline
             num_pipeline = Pipeline(
                 steps=[
-                    ('imputer', SimpleImputer(strategy='median')),
-                    ('scaler',StandardScaler())
+                    ('imputer', SimpleImputer(strategy='median'))
+                    #('scaler',StandardScaler())
                 ]
             )
 
@@ -93,6 +93,11 @@ class DataTransformation:
             logging.info(f'Test Dataframe Head : \n {test_df.head().to_string()}')
 
             for df in [train_df, test_df]:
+                # Extracting features from 'Date_of_Journey'
+                df['Duration_Hour'] = df['Duration'].str.extract(r'(\d+)h',expand= False).fillna(0).astype(int)
+                df['Duration_Min'] = df['Duration'].str.extract(r'(\d+)h',expand= False).fillna(0).astype(int)
+                
+
                 # Extracting features from 'Dep_Time'
                 df['Departure_Hour'] = pd.to_datetime(df['Dep_Time'], format= "%H:%M").dt.hour
                 df['Departure_Min'] = pd.to_datetime(df['Dep_Time'], format= "%H:%M").dt.minute
@@ -105,9 +110,7 @@ class DataTransformation:
                 df['Journey_Day'] = pd.to_datetime(df['Date_of_Journey'], format= '%d/%m/%Y').dt.day
                 df['Journey_Month'] = pd.to_datetime(df['Date_of_Journey'], format= '%d/%m/%Y').dt.month
 
-                # Extracting features from 'Date_of_Journey'
-                df['Duration_Hour'] = df['Duration'].str.extract(r'(\d+)h',expand= False).fillna(0).astype(int)
-                df['Duration_Min'] = df['Duration'].str.extract(r'(\d+)h',expand= False).fillna(0).astype(int)
+                
 
 
             preprocessing_obj = self.get_data_transformation()
