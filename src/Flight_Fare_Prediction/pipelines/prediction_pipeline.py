@@ -27,9 +27,7 @@ class PredictPipeline:
         except Exception as e:
             raise customexception(e,sys)
 
-'''one_hot_encode_cols = ['Airline', 'Source', 'Destination']
-ordinal_encode_cols = ['Total_Stops']
-numerical_cols = ['Duration_Hour','Duration_Min','Departure_Hour', 'Departure_Min', 'Arrival_Hour', 'Arrival_Min', 'Journey_Day', 'Journey_Month']'''
+
 
 class CustomData:
     def __init__(self,
@@ -38,26 +36,24 @@ class CustomData:
                  Destination: str,
                  Journey_Day: int,
                  Journey_Month: int,
-                 Total_Stops: str,
+                 Journey_Weekday : str,
+                 Departure_Part_of_Day: str,
+                 Arrival_Part_of_Day : str,
                  Duration_Hour: int,
                  Duration_Min: int,
-                 Departure_Hour: int,
-                 Departure_Min: int,
-                 Arrival_Hour: int,
-                 Arrival_Min: int):
+                 Total_Stops: str):
         
         self.Airline = Airline
         self.Source = Source
         self.Destination = Destination
         self.Journey_Day = Journey_Day
         self.Journey_Month = Journey_Month
-        self.Total_Stops = Total_Stops
+        self.Journey_Weekday = Journey_Weekday
+        self.Departure_Part_of_Day = Departure_Part_of_Day
+        self.Arrival_Part_of_Day = Arrival_Part_of_Day
         self.Duration_Hour = Duration_Hour
         self.Duration_Min = Duration_Min
-        self.Departure_Hour = Departure_Hour
-        self.Departure_Min = Departure_Min
-        self.Arrival_Hour = Arrival_Hour
-        self.Arrival_Min = Arrival_Min
+        self.Total_Stops = Total_Stops
 
 
     
@@ -69,13 +65,12 @@ class CustomData:
                 'Destination' : [self.Destination],
                 'Journey_Day': [self.Journey_Day],
                 'Journey_Month': [self.Journey_Month],
-                'Total_Stops':[self.Total_Stops],
+                'Journey_Weekday' : [self.Journey_Weekday],
+                'Departure_Part_of_Day': [self.Departure_Part_of_Day],
+                'Arrival_Part_of_Day' : [self.Arrival_Part_of_Day],
                 'Duration_Hour':[self.Duration_Hour],
                 'Duration_Min':[self.Duration_Min],
-                'Departure_Hour':[self.Departure_Hour],
-                'Departure_Min':[self.Departure_Min],
-                'Arrival_Hour': [self.Arrival_Hour],
-                'Arrival_Min':[self.Arrival_Min]
+                'Total_Stops':[self.Total_Stops],
             }
             df = pd.DataFrame(custom_data_input_dict)
             logging.info('DataFrame Gathered')
