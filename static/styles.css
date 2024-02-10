@@ -1,0 +1,100 @@
+/* static/styles.css */
+
+body {
+    background-image: url("pic.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.form-group {
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    width: calc(30% - 20px);
+    background-color: transparent;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 24px;
+    font-style: italic;
+    color: #fff;
+}
+
+.form-group select,
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #000;
+}
+
+section.banner {
+    max-width: 800px;
+    padding: 20px;
+    text-align: center;
+}
+
+.banner-heading h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.submit-container {
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+input[type="submit"] {
+    font-size: 16px;
+    background-color: transparent; 
+    color: #fff;
+    padding: 10px 20px;
+    border: transparent;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #000;
+}
+
+
+
+
+.result-banner {
+    background-color: #000; 
+    border-radius: 15px;
+    padding: 20px; 
+}
+
+.result-banner-heading h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    font-size: 34px;
+    color: #fff; 
+}
+
