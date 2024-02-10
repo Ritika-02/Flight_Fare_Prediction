@@ -5,8 +5,9 @@ import numpy as np
 import pandas as pd
 from src.Flight_Fare_Prediction.logger import logging
 from src.Flight_Fare_Prediction.exception import customexception
-
+from sklearn.model_selection import cross_val_score
 from sklearn.metrics import r2_score,mean_absolute_error,mean_squared_error
+from sklearn.ensemble import StackingRegressor
 
 def save_object(file_path, obj):
     try:
@@ -41,7 +42,7 @@ def evaluate_model(X_train,y_train,X_test,y_test,models):
             report[list(models.keys())[i]] = test_model_Score
 
         return report
-    
+   
 
     except Exception as e:
         logging.info('Exception occured during model training')

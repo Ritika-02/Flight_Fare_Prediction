@@ -31,16 +31,15 @@ class DataTransformation:
             logging.info('Data Transformation Initiated')
 
             one_hot_encode_cols = ['Airline', 'Source', 'Destination']
-            ordinal_encode_cols = ['Total_Stops']
-            numerical_cols = ['Duration_Hour','Duration_Min','Departure_Hour', 'Departure_Min', 'Arrival_Hour', 'Arrival_Min', 'Journey_Day', 'Journey_Month']
-
+            ordinal_encode_cols = ['Total_Stops','Journey_Weekday', 'Departure_Part_of_Day', 'Arrival_Part_of_Day']
+            numerical_cols = ['Duration_Hour','Duration_Min','Journey_Day', 'Journey_Month']
             logging.info('Pipeline Initiated')
 
             # Numerical Pipeline
             num_pipeline = Pipeline(
                 steps=[
-                    ('imputer', SimpleImputer(strategy='median'))
-                    #('scaler',StandardScaler())
+                    ('imputer', SimpleImputer(strategy='median')),
+                    ('scaler',StandardScaler())
                 ]
             )
 
@@ -58,7 +57,13 @@ class DataTransformation:
             ordinal_encode_pipeline = Pipeline(
                 steps=[
                     ('imputer', SimpleImputer(strategy='most_frequent')),
-                    ('ordinalencoder', OrdinalEncoder(categories=[['non-stop','1 stop', '2 stops', '3 stops', '4 stops']]))
+                    ('ordinalencoder', OrdinalEncoder(categories=[
+
+                        ['non-stop', '1 stop', '2 stops', '3 stops', '4 stops'],
+                        ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                        ['morning', 'afternoon', 'evening', 'night'],
+                        ['morning', 'afternoon', 'evening', 'night']
+                    ]))
                 ]
             )
 
@@ -99,16 +104,16 @@ class DataTransformation:
                 
 
                 # Extracting features from 'Dep_Time'
-                df['Departure_Hour'] = pd.to_datetime(df['Dep_Time'], format= "%H:%M").dt.hour
-                df['Departure_Min'] = pd.to_datetime(df['Dep_Time'], format= "%H:%M").dt.minute
-                
+                df['Departure_Part_of_Day'] = pd.to_datetime(df['Dep_Time'], format='%H:%M').dt.hour.apply(lambda x: 'morning' if 5 <= x < 12 else 'afternoon' if 12 <= x < 17 else 'evening' if 17 <= x < 21 else 'night')
+
                 # Extracting features from 'Arrival_Time'
-                df['Arrival_Hour'] = df['Arrival_Time'].apply(lambda x : pd.to_datetime(x, errors= 'coerce').hour)
-                df['Arrival_Min'] = df['Arrival_Time'].apply(lambda x : pd.to_datetime(x, errors= 'coerce').minute)
+                df['Arrival_Part_of_Day'] = df['Arrival_Time'].apply(lambda x: pd.to_datetime(x, errors='coerce').hour).apply(lambda x: 'morning' if 5 <= x < 12 else 'afternoon' if 12 <= x < 17 else 'evening' if 17 <= x < 21 else 'night')
+
 
                 # Extracting features from 'Date_of_Journey'
                 df['Journey_Day'] = pd.to_datetime(df['Date_of_Journey'], format= '%d/%m/%Y').dt.day
                 df['Journey_Month'] = pd.to_datetime(df['Date_of_Journey'], format= '%d/%m/%Y').dt.month
+                df['Journey_Weekday'] = pd.to_datetime(df['Date_of_Journey'], format='%d/%m/%Y').dt.day_name()
 
                 
 

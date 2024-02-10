@@ -9,14 +9,13 @@ from src.Flight_Fare_Prediction.exception import customexception
 from src.Flight_Fare_Prediction.utils.utils import save_object
 from src.Flight_Fare_Prediction.utils.utils import evaluate_model
 
-from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
-from sklearn.svm import SVR
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.ensemble import GradientBoostingRegressor 
-from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestRegressor,GradientBoostingRegressor
+from sklearn.model_selection import RandomizedSearchCV
 from sklearn.metrics import mean_squared_error, r2_score
-from sklearn.preprocessing import StandardScaler
+from xgboost import XGBRegressor
+from sklearn.ensemble import AdaBoostRegressor, BaggingRegressor
 
 @dataclass
 class ModelTrainerConfig:
@@ -40,42 +39,53 @@ class ModelTrainer:
                 test_array[:, -1]
             )
 
-            #scaler = StandardScaler()
-            #X_train_scaled = scaler.fit_transform(X_train)
-            #X_test_scaled = scaler.transform(X_test)
+            
 
-            # Hyperparameter tuning using GridSearchCV for RandomForestRegressor
+            # Hyperparameter tuning using RandomSearchCV for RandomForestRegressor
             param_grid_rf = {
-                'n_estimators': [50, 100, 150, 200],
-                'max_depth': [None, 10, 20, 30],
-                'min_samples_split': [2, 5, 10],
-                'min_samples_leaf': [1, 2, 4]
+                'n_estimators': [100, 200, 300, 400,500],
+                'max_depth': [10, 20, 30, None],
+                'min_samples_split': [2, 5, 10, 15],
+                'min_samples_leaf': [1, 2, 4, 8]
             }
 
-            grid_search_rf = GridSearchCV(RandomForestRegressor(), param_grid_rf, cv=5, scoring='r2', n_jobs= -1)
-            grid_search_rf.fit(X_train, y_train)
+            rf_random = RandomizedSearchCV(RandomForestRegressor(), param_grid_rf, cv=5, scoring='r2', n_jobs= -1, random_state= 42)
+            rf_random.fit(X_train, y_train)
 
-            best_rf_model = grid_search_rf.best_estimator_
+            best_rf_model = rf_random.best_estimator_
+
+            param_grid_xgb = {
+                'learning_rate' : [0.01, 0.1, 0.2],
+                'max_depth' : [3, 5, 7],
+                'n_estimators' : [50, 100, 200]
+            }
+
+            xgb_random = RandomizedSearchCV(XGBRegressor(), param_grid_xgb, cv=5, scoring= 'r2', n_jobs= -1, random_state= 42)
+            xgb_random.fit(X_train,y_train)
+
+            best_xgb_model = xgb_random.best_estimator_
 
             models = {
-                'LinearRegression' : LinearRegression(),
+                'LinearRegression': LinearRegression(),
                 'Lasso'            : Lasso(max_iter=10000),
                 'Ridge'             : Ridge(),
-                'Elasticnet'        : ElasticNet(),
-                'SupportVectorRegressor' : SVR(),
                 'DecisionTreeRegressor'  : DecisionTreeRegressor(),
                 'RandomForestRegressor'  : best_rf_model,
-                'GradientBoostingRegressor': GradientBoostingRegressor()
-            }
+                'GradientBoostingRegressor': GradientBoostingRegressor(),
+                'XGBoostRegressor': best_xgb_model,
+                'AdaBoostRegressor' : AdaBoostRegressor(best_rf_model, n_estimators=50, random_state= 42),
+                'BaggingRegressor': BaggingRegressor(best_rf_model, n_estimators=50, random_state=42)
+                }
 
-            
+
 
             # Evaluate the best RandomForestRegressor model on the test set
             y_pred_rf = best_rf_model.predict(X_test)
             r2_rf = r2_score(y_test, y_pred_rf)
 
+
             print(f'Best RandomForestRegressor Model Found, R2 Score: {r2_rf}')
-            print('Best Hyperparameters:', grid_search_rf.best_params_)
+            print('Best Hyperparameters:', rf_random.best_params_)
             print('\n==================================================================================\n')
             logging.info(f'Best RandomForestRegressor Model Found, R2 Score: {r2_rf}')
 

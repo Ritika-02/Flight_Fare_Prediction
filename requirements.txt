@@ -3,7 +3,7 @@ scikit-learn
 numpy
 Seaborn
 ipykernel
-
+xgboost
 
 #-e .
 
