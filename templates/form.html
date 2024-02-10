@@ -2,6 +2,7 @@
 <body>
 <form action="{{url_for('predict_datapoint')}}" method="POST">
 
+
     <div class="form-group">
         <label for="Airline">Airline:</label>
         <select id="Airline" name="Airline">
@@ -31,6 +32,19 @@
     </div>
 
     <div class="form-group">
+        <label for="Journey_Weekday">Journey_Weekday:</label>
+        <select id="Journey_Weekday" name="Journey_Weekday">
+            <option value="Sunday">Sunday</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+        </select>
+    </div>
+
+    <div class="form-group">
         <label for="Source">Source:</label>
         <select id="Source" name="Source">
             <option value="Banglore">Banglore</option>
@@ -44,7 +58,6 @@
     <div class="form-group">
         <label for="Destination">Destination:</label>
         <select id="Destination" name="Destination">
-            <option value="New Delhi">New Delhi</option>
             <option value="Banglore">Banglore</option>
             <option value="Cochin">Cochin</option>
             <option value="Kolkata">Kolkata</option>
@@ -52,29 +65,26 @@
             <option value="Hyderabad">Hyderabad</option>
         </select>
     </div>
-    
-    
 
     <div class="form-group">
-        <label for="Departure_Hour">Departure Hour:</label>
-        <input type="text" id="Departure_Hour" name="Departure_Hour" placeholder="Enter Departure Hour (integer)">
+        <label for="Departure_Part_of_Day">Departure_Part_of_Day:</label>
+        <select id="Departure_Part_of_Day" name="Departure_Part_of_Day">
+            <option value="morning">Morning</option>
+            <option value="afternoon">Afternoon</option>
+            <option value="evening">Evening</option>
+            <option value="night">Night</option>
+        </select>
     </div>
 
     <div class="form-group">
-        <label for="Departure_Min">Departure Min:</label>
-        <input type="text" id="Departure_Min" name="Departure_Min" placeholder="Enter Departure Min (integer)">
+        <label for="Arrival_Part_of_Day">Arrival_Part_of_Day:</label>
+        <select id="Arrival_Part_of_Day" name="Arrival_Part_of_Day">
+            <option value="morning">Morning</option>
+            <option value="afternoon">Afternoon</option>
+            <option value="evening">Evening</option>
+            <option value="night">Night</option>
+        </select>
     </div>
-
-    <div class="form-group">
-        <label for="Arrival_Hour">Arrival Hour Hour:</label>
-        <input type="text" id="Arrival_Hour" name="Arrival_Hour" placeholder="Enter Arrival Hour (integer)">
-    </div>
-
-    <div class="form-group">
-        <label for="Arrival_Min">Arrival Min:</label>
-        <input type="text" id="Arrival_Min" name="Arrival_Min" placeholder="Enter Arrival_Min (integer)">
-    </div>
-
     
 
     <div class="form-group">
