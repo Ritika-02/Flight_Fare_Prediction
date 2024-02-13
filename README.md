@@ -5,7 +5,7 @@ Welcome to the Flight Fare Prediction project! ✈️ This project uses machine 
 
 ## Project Overview
 
-- **Objective:** Predict flight fares using machine learning techniques.
+- **Objective:** Predict flight fares using machine learning techniques. 
 - **Tech Stack:** Python, Flask, Scikit-Learn, AWS
 - **Dataset:** [Link to Dataset](https://www.kaggle.com/datasets/nikhilmittal/flight-fare-prediction-mh)
 
