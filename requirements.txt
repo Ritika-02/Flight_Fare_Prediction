@@ -4,6 +4,7 @@ numpy
 Seaborn
 ipykernel
 xgboost
+Flask
 
 #-e .
 
